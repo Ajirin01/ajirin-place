@@ -10,6 +10,12 @@ use App\Order;
 use App\Cart;
 use App\ShippingAddress;
 
+use	Illuminate\Support\Facades\Mail; 
+
+
+use App\Mail\OrderConfirmation;
+use App\Mail\NewOrderAlert;
+
 class PaymentController extends Controller
 {
     public function initialize()
@@ -83,8 +89,11 @@ class PaymentController extends Controller
         /* 4. Retrieve metadata we sent in the initialise step */
         $meta = $verify['data']['meta'];           // ['shipping_id' => …, 'total' => …, …]
 
+        // return response()->json($meta['shipping_id']);
+
         /* 5. Rebuild & save the final order */
-        $order = Order::create([
+
+        $data = [
             'shipping_details' => ShippingAddress::find($meta['shipping_id']),
             'order_number'     => rand(123456789, 999999999),
             'user_email'       => $verify['data']['customer']['email'],
@@ -93,12 +102,22 @@ class PaymentController extends Controller
             'payment_method'   => 'flutterwave',
             'status'           => 'paid',
             'sale_mode'        => $meta['sale_mode'] ?? 'retail', // 👈 safe fallback
-        ]);
+        ];
+
+        $order = Order::create($data);
 
 
         /* 6. Clear cart & session scratch data */
         Cart::where('user_id', $meta['user_id'])->delete();
         Session::forget(['cart_items', 'payment_meta']);
+
+        // return response()->json($order);
+
+        // ✅ Send confirmation to user
+        Mail::to($data['shipping_details']->email)->send(new OrderConfirmation($data));
+
+        // ✅ Alert store admin (change to your store email)
+        Mail::to('mubarakolagoke@gmail.com')->send(new NewOrderAlert($data));
 
         /* 7. Redirect to confirmation */
         return redirect()->route('order.confirmation', $order->order_number);

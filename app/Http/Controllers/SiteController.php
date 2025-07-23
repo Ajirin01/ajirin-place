@@ -13,11 +13,15 @@ use App\Cart as Cart;
 use App\ShippingAddress;
 use App\TempData;
 use App\Order;
+use App\PreOrder;
 use	Illuminate\Support\Facades\Mail; 
 use App\Mail\contactUs;
 
 use Session;
 use Validator;
+
+use App\Mail\OrderConfirmation;
+use App\Mail\NewOrderAlert;
 
 
 class SiteController extends Controller
@@ -92,7 +96,7 @@ class SiteController extends Controller
     }
 
     public function cart(){
-        $carts = Cart::where('shopping_type', Session::get("sale_type"))->where('user_id', Auth::user()->id)->get();
+        $carts = Cart::where('user_id', Auth::user()->id)->get();
         // return response()->json($carts);
         return view('cart', ['carts'=> $carts]);
     // return response()->json($user);
@@ -175,10 +179,17 @@ class SiteController extends Controller
                 'status'           => 'pay on delivery',
                 'sale_mode'        => Session::get('shopping_type'),
             ];
+            // return response()->json($data['cart']);
             Order::create($data);
 
             // ✅ Clear cart items for the user (based on email or session)
             Cart::where('user_id', auth()->id())->delete();
+
+            // ✅ Send confirmation to user
+            Mail::to($request->email)->send(new OrderConfirmation($data));
+
+            // ✅ Alert store admin (change to your store email)
+            Mail::to('mubarakolagoke@gmail.com')->send(new NewOrderAlert($data));
 
             // Redirect to confirmation with order number
             return redirect()->route('order.confirmation', $data['order_number']);
@@ -213,8 +224,9 @@ class SiteController extends Controller
 
     public function my_account(Request $request){
         $orders = Order::where('user_email',Auth::user()->email)->get();
+        $preorders = PreOrder::where('email',Auth::user()->email)->get();
         $shipping_addresses = ShippingAddress::where('email',Auth::user()->email)->get();
-        return view('my-account',['orders'=> $orders, 'shipping_addresses'=> $shipping_addresses]);
+        return view('my-account',['orders'=> $orders, 'preorders'=> $preorders, 'shipping_addresses'=> $shipping_addresses]);
         // return response()->json($request);
     }
 

@@ -39,22 +39,24 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="contact-info mt-md-28 mt-sm-28">
-                        <h2>contact us</h2>
-                        <p>Phase Two pharmacy Limited was founded in 2013 in the city of Asaba, Minna and other parts of the country.<br><br>
-                            
-                            Phase Two Pharmacy exist to meet the pharmaceutical needs of individuals, families and other organizations. We have been at the forefront of innovative medicine deliveries to enhance the wellbeing of the health of Nigerians. <br><br>
-                            
-                            With our Pharmaceutical innovations you can now purchase drugs online and get the drugs delivered right at your domain. 
-                            
-                            When it comes to innovations in the pharmaceutical industry, we have no match.</p>
+                        <h2>Contact Us</h2>
+                        <p>
+                        <strong>Ajirin Place</strong> is a modern creative studio offering elegant, handcrafted art, premium custom frames, and refined woodcrafts, all <em>made for places that matter</em>. We help discerning individuals and brands transform their spaces with sophisticated, meaningful pieces that reflect quality and style.<br><br>
+
+                        Rooted in craftsmanship and inspired by contemporary design, Ajirin Place delivers timeless works that add warmth, personality, and distinction to any environment, from homes and offices to upscale commercial interiors. Every piece is thoughtfully made to elevate the everyday.<br><br>
+
+                        Connect with us to explore bespoke commissions, curated collections, or collaborative design solutions that bring your vision to life with grace and artistry.
+                        </p>
+
+
                         <ul>
-                            <li><i class="fa fa-fax"></i> Address : No. 224 Nnebisi Road, Asaba</li>
-                            <li><i class="fa fa-envelope-o"></i> info@yourdomain.com</li>
-                            <li><i class="fa fa-phone"></i> phase2 phone number</li>
+                            <li><i class="fa fa-fax"></i> Address : Opp Mayfair Pharmacy, Ile-Ife, Osun State, Nigeria</li>
+                            <li><i class="fa fa-envelope-o"></i> info@ajirinplace.com</li>
+                            <li><i class="fa fa-phone"></i> +234 705 850 8448</li>
                         </ul>
                         <div class="working-time">
                             <h3>Working hours</h3>
-                            <p><span>Monday – Saturday:</span>08AM – 22PM</p>
+                            <p><span>Monday – Saturday:</span>10AM – 17PM</p>
                         </div>
                     </div>
                 </div>

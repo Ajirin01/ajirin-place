@@ -48,8 +48,8 @@
                                 <td>{{$product->name}} <input id="product-name{{$product->id}}" type="hidden"  value="{{$product->name}}"></td>
                                 <td width="100px"><input id="product-quantity{{$product->id}}" class="form-control" min="1" type="number"  id="" onchange="getQuantity({{$product->id}})" value="1" required></td>
                                 <td>
-                                  {{Session::get('sale_type') == 'retail'? $product->price : $product->wholesale_price}} 
-                                  <input id="product-price{{$product->id}}" type="hidden"  value="{{Session::get('sale_type') == 'retail'? $product->price : $product->wholesale_price}}">
+                                  {{ $product->price }} 
+                                  <input id="product-price{{$product->id}}" type="hidden"  value="{{ $product->price }}">
                                 </td>
                                 <td>
                                     <input type="checkbox" class="form-control" id="add{{$product->id}}" onclick="return checkall('selector[]',{{$product->id}});">

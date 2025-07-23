@@ -127,7 +127,7 @@
                                             <div class="product-content">
                                                 <h4><a href="{{ route('product-details', $product->name) }}">{{$product->name}}</a></h4>
                                                 <div class="pricebox">
-                                                    <span class="regular-price">#{{$product->wholesale_price == null  ? $product->price : $product->wholesale_price }}</span>
+                                                    <span class="regular-price">₦{{ number_format($product->wholesale_price == null  ? $product->price : $product->wholesale_price) }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,7 +150,7 @@
                                             <div class="product-content">
                                                 <h4><a href="{{ route('product-details', $product->name) }}">{{$product->name}}</a></h4>
                                                 <div class="pricebox">
-                                                    <span class="regular-price">#{{$product->price}}</span>
+                                                    <span class="regular-price">₦{{ number_format($product->price)}}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -198,7 +198,7 @@
                                         <div class="product-content">
                                             <h4><a href="{{ route('product-details', $product->name) }}">{{$product->name}}</a></h4>
                                             <div class="pricebox">
-                                                <span class="regular-price">#{{$product->wholesale_price == null  ? $product->price : $product->wholesale_price }}</span>
+                                                <span class="regular-price">₦{{ number_format($product->wholesale_price == null  ? $product->price : $product->wholesale_price) }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -220,7 +220,7 @@
                                         <div class="product-content">
                                             <h4><a href="{{ route('product-details', $product->name) }}">{{$product->name}}</a></h4>
                                             <div class="pricebox">
-                                                <span class="regular-price">#{{$product->price}}</span>
+                                                <span class="regular-price">₦{{ number_format($product->price)}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -237,7 +237,7 @@
                       <!-- banner statistic start -->
                       <div class="banner-statistic pt-28 pb-36">
                           <div class="img-container fix img-full">
-                              <a href="#">
+                              <a href="{{ route('preorder.create') }}">
                                   <img src="{{ asset('site/assets/img/banner/banner_static1.jpg') }}" alt="">
                               </a>
                           </div>
@@ -268,7 +268,7 @@
                                                             <h4><a href="{{ route('product-details', $product->name) }}">{{$product->name}}</a></h4>
                                                             <div class="price-box">
                                                                 <div class="regular-price">
-                                                                    #{{$product->wholesale_price == null  ? $product->price : $product->wholesale_price }}
+                                                                    ₦{{ number_format($product->wholesale_price == null  ? $product->price : $product->wholesale_price) }}
                                                                 </div>
                                                                 <div class="old-price">
                                                                     <del></del>
@@ -289,7 +289,7 @@
                                                             <h4><a href="{{ route('product-details', $product->name) }}">{{$product->name}}</a></h4>
                                                             <div class="price-box">
                                                                 <div class="regular-price">
-                                                                    #{{$product->price}}
+                                                                    ₦{{ number_format($product->price)}}
                                                                 </div>
                                                                 <div class="old-price">
                                                                     <del></del>
@@ -327,7 +327,7 @@
                                                             <h4><a href="{{ route('product-details', $product->name) }}">{{$product->name}}</a></h4>
                                                             <div class="price-box">
                                                                 <div class="regular-price">
-                                                                    #{{$product->wholesale_price == null  ? $product->price : $product->wholesale_price }}
+                                                                    ₦{{ number_format($product->wholesale_price == null  ? $product->price : $product->wholesale_price) }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -345,7 +345,7 @@
                                                             <h4><a href="{{ route('product-details', $product->name) }}">{{$product->name}}</a></h4>
                                                             <div class="price-box">
                                                                 <div class="regular-price">
-                                                                    #{{$product->price}}
+                                                                    ₦{{ number_format($product->price)}}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -392,7 +392,7 @@
         </div>
     </div>
     <!-- Quick view modal end --> --}}
-    @if ((Session::get("sale_type") == null) && !Session::get('remember_setting'))
+    {{-- @if ((Session::get("sale_type") == null) && !Session::get('remember_setting'))
         <script>
             confirm("You are shopping retail mode, want to switch to Wholesale? You can always switch mode from the option on Navigation bar")
             document.getElementById("shopping-type").value = 'retail'
@@ -417,7 +417,7 @@
             document.getElementById("shopping-setting").submit()
         </script>
         {{Session::put('remember_setting', true)}}
-    @endif
+    @endif --}}
 
     
 @endsection

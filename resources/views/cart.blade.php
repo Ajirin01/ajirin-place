@@ -14,8 +14,8 @@
                                 <th class="pro-title">Product</th>
                                 <th class="pro-price">Price</th>
                                 <th class="pro-quantity">Quantity</th>
-                                <th class="pro-subtotal">Total</th>
-                                <th class="pro-remove">Remove</th>
+                                <th class="pro-subtotal">Sub Total</th>
+                                <th class="pro-remove">Select / Remove</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -30,13 +30,12 @@
                                                 // $product = json_decode($product);
                                             @endphp
                                             <td class="pro-thumbnail">
-                                                <input type="checkbox" name="add_to_checkout" id="add-to-checkout{{$cart->id}}" onclick="return addToCheckout({{$cart->id}})">
                                                 <a href="{{ route('product-details', $product->name) }}"><img class="img-fluid" src="{{asset('public/uploads/'.$product->image)}}"
                                                                                         alt="Product"/></a></td>
                                             <td class="pro-title">{{$product->name}}({{$cart->shopping_type}})<a href="{{ route('product-details', $product->name) }}">
                                                 
                                             </a></td>
-                                            <td class="pro-price"><span>#{{$cart->product_price}}</span></td>
+                                            <td class="pro-price"><span>₦{{ number_format($cart->product_price) }}</span></td>
                                             <td class="pro-quantity">
                                                 <div class="pro-qty"><input name="product_quantity[]" id="product-quantity{{$cart->id}}" type="text" value="{{$cart->product_quantity}}"></div>
                                             </td>
@@ -48,14 +47,19 @@
                                             <input type="hidden" id="product-name{{$cart->id}}"  value="{{$product->name}}">
                                             
 
-                                            <td class="pro-subtotal"><span>#{{$cart->product_quantity * $cart->product_price}}</span></td>
-                                            <td class="pro-remove"><a href="{{ route('delete_cart_item', $cart->id) }}"><i class="fa fa-trash-o"></i></a></td>
-                                            {{-- <td class="pro-remove">
-                                                <form action="{{ route('delete_cart_item', $cart->product_quantity) }}" method="POST">
-                                                    @csrf
-                                                <button style="background: transparent; border: none; cursor: pointer"><i class="fa fa-trash-o"></i></button>
-                                                </form>
-                                            </td> --}}
+                                            <td class="pro-subtotal"><span>₦{{ number_format($cart->product_quantity * $cart->product_price) }}</span></td>
+
+
+
+                                            <td class="pro-remove">
+                                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                                    <input type="checkbox" name="add_to_checkout" id="add-to-checkout{{$cart->id}}" onclick="return addToCheckout({{$cart->id}})">
+                                                    <a href="{{ route('delete_cart_item', $cart->id) }}" style="margin-left: 10px;">
+                                                        <i class="fa fa-trash-o" style="color: red;"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+
                                         </tr>
                                     @endforeach
                                 </form>
@@ -113,15 +117,15 @@
 
                                     <tr>
                                         <td>Sub Total</td>
-                                        <td># <span id="subtotal">0</span></td>
+                                        <td>₦ <span id="subtotal">0</span></td>
                                     </tr>
                                     <tr>
                                         <td>Shipping</td>
-                                        <td># <span id="shipping">0</span></td>
+                                        <td>₦ <span id="shipping">0</span></td>
                                     </tr>
                                     <tr class="total">
                                         <td>Total</td>
-                                        <td class="total-amount">#<span id="total">0</span></td>
+                                        <td class="total-amount">₦<span id="total">0</span></td>
                                     </tr>
                                 </table>
                             </div>

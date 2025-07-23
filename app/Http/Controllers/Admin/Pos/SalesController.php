@@ -91,34 +91,39 @@ class SalesController extends Controller
         }
     }
 
-    public function addProductsToSell(Request $request){
-        $added_product = $request->all();
-
+    public function addProductsToSell(Request $request)
+    {
         $added_product = $request->cart;
-        // return response()->json($added_product);
 
-
-        // return response()->json(json_decode($added_product['cart'])[0]);
-
-        $cart = array();
+        $cart = [];
         $total = 0;
 
-        for($i=0; $i<count(json_decode($added_product)); $i++){
-            array_push($cart,['product_id'=> json_decode($added_product)[$i]->product_id,
-                        'product_name'=> json_decode($added_product)[$i]->product_name,
-                        'product_price'=> json_decode($added_product)[$i]->product_price,
-                        'product_quantity'=> json_decode($added_product)[$i]->product_quantity
-                        ]);
+        $decoded = json_decode($added_product);
 
-            $total += json_decode($added_product)[$i]->product_price * json_decode($added_product)[$i]->product_quantity;
+        foreach ($decoded as $item) {
+            // Clean and cast price and quantity to numbers
+            $price = floatval(preg_replace('/[^\d.]/', '', $item->product_price ?? 0));
+            $quantity = floatval(preg_replace('/[^\d.]/', '', $item->product_quantity ?? 0));
+
+            $cart[] = [
+                'product_id' => $item->product_id,
+                'product_name' => $item->product_name,
+                'product_price' => $price,
+                'product_quantity' => $quantity
+            ];
+
+            $total += $price * $quantity;
         }
 
-        // return response()->json($cart);
-        
-        // return response()->json($total);
         Session::put('cart', $cart);
-        return view('Admin.Pos.added_products',['products' => $cart, 'total'=> $total, 'sale_number'=> $this->sale_number()]);
+
+        return view('Admin.Pos.added_products', [
+            'products' => $cart,
+            'total' => $total,
+            'sale_number' => $this->sale_number()
+        ]);
     }
+
 
     public function updateCart(Request $request){
         $added_product = $request->all();

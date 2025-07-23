@@ -44,8 +44,8 @@
                         <td>{{$product->name}}</td>
                         {{-- <td>{{$product->wholesale_stock}}</td> --}}
                         <td>
-                          {{Session::get('sale_type') == 'retail' ? $product->stock : $product->wholesale_stock}}
-                          @if((Session::get('sale_type') == 'retail' ? $product->stock : $product->wholesale_stock) < 5)
+                          {{Session::get('sale_mode') == 'retail' ? $product->stock : $product->wholesale_stock}}
+                          @if((Session::get('sale_mode') == 'retail' ? $product->stock : $product->wholesale_stock) < 5)
                             (<span style="color: red">stock level below 5</span>)
                           @endif
                         </td>

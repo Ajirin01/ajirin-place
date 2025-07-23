@@ -4,9 +4,9 @@
 
     if(Auth::check()){
         if(Session::get("sale_type") == 'wholesale'){
-            $cart = App\Cart::where('shopping_type','wholesale')->where('user_id', Auth::user()->id)->get();
+            $cart = App\Cart::where('user_id', Auth::user()->id)->get();
         }else{
-            $cart = App\Cart::where('shopping_type', 'retail')->where('user_id', Auth::user()->id)->get();
+            $cart = App\Cart::where('user_id', Auth::user()->id)->get();
         }
     }else{
         $cart = [];
@@ -69,7 +69,7 @@
                                     <i class="fa fa-envelope"></i>
                                     request@ajirinplace.com
                                 </a>
-                                <a href="tel:+2348162519465">
+                                <a href="tel:+2347058508448">
                                     <i class="fa fa-phone"></i>
                                     +2347058508448
                                 </a>
@@ -183,7 +183,7 @@
                                         </div>
                                         <div class="cart-total-price">
                                             <span>total</span>
-                                            #{{$subtotal}}.00
+                                            ₦{{ number_format($subtotal)}}
                                         </div>
                                         <ul class="cart-list">
                                             @foreach ($cart as $key=> $item)
@@ -198,7 +198,7 @@
                                                     </div>
                                                     <div class="cart-info">
                                                         <h4><a href="{{ route('product-details', $product->id) }}">{{$product->name}} x{{$item->product_quantity}}</a></h4>
-                                                        <span>#{{$product->price*$item->product_quantity}}</span>
+                                                        <span>₦{{ number_format($product->price*$item->product_quantity)}}</span>
                                                     </div>
                                                     <div class="del-icon">
                                                         <a href="{{ route('delete_cart_item', $item->id) }}"><i class="fa fa-times"></i></a>
@@ -208,7 +208,7 @@
                                             
                                             <li class="mini-cart-price">
                                                 <span class="subtotal">subtotal : </span>
-                                                <span class="subtotal-price">#{{$subtotal}}.00</span>
+                                                <span class="subtotal-price">₦{{ number_format($subtotal)}}</span>
                                             </li>
                                             <li class="checkout-btn">
                                                 <a href="{{route('cart')}}">checkout</a>
@@ -367,8 +367,8 @@
                                 <div class="widget-body">
                                     <ul class="location">
                                         <li><a href="mailto:support@phase2.com"><i class="fa fa-envelope"></i>request@ajirinplace.com</a></li>
-                                        <li><a href="tel:+2348162519465"><i class="fa fa-phone"></i>+2347058508448</a></li>
-                                        <li><i class="fa fa-map-marker"></i>Mallam Habeeb Plaza, Muaza Moh'd road<br> Opp. Old Secretariat Along Old Airport road<br> Minna, Niger State</li>
+                                        <li><a href="tel:+2347058508448"><i class="fa fa-phone"></i>+2347058508448</a></li>
+                                        <li><i class="fa fa-map-marker"></i>Opp Mayfair Pharmacy, Ile-Ife, <br> Osun State, Nigeria</li>
                                     </ul>
                                     <a class="map-btn" href="{{ route('contact-us') }}">open in google map</a>
                                 </div>

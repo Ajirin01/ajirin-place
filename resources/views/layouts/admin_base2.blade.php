@@ -207,6 +207,29 @@
             @can('isAdmin')
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
+                  <i class="nav-icon fa fa-cart-plus"></i>
+                  <p>
+                    Pre-Order
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('admin.preorders.create') }}" class="nav-link text-warning">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>New Order</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.preorders.index') }}" class="nav-link text-success">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>All Pre-Orders</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
                   <i class="nav-icon fa fa-users"></i>
                   <p>
                     Staff
@@ -284,6 +307,31 @@
                   </li>
                 </ul>
               </li>
+
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fa fa-cart-plus"></i>
+                  <p>
+                    Pre-Order
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('admin.preorder.create') }}" class="nav-link text-warning">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>New Order</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.preorder.index') }}" class="nav-link text-success">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>All Pre-Orders</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
 
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">

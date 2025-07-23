@@ -56,6 +56,11 @@ Route::get('/order/confirmation/{orderNumber}', 'SiteController@orderConfirmatio
 Route::get('edit-address/{id}', 'SiteController@editAddress')->name('edit-address')->middleware('auth');
 Route::put('hanle-edit-address/{id}', 'SiteController@handleEditAddress')->name('handle-edit-address')->middleware('auth');
 
+Route::get('/pre-order', 'PreOrderController@create')->name('preorder.create');
+Route::post('/pre-order', 'PreOrderController@store')->name('preorder.store');
+Route::get('/pre-order/thank-you/{code}', 'PreOrderController@thankYou')->name('preorder.thankyou');
+Route::get('/pre-order/invoice/{code}', 'PreOrderController@invoice')->name('preorder.invoice');
+
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', 'Admin\DashboardController@dashboard')->name('dashboard')->middleware('admin');
     Route::resource('products',	'Admin\ProductsController')->middleware('product');
@@ -70,6 +75,18 @@ Route::prefix('admin')->group(function () {
     Route::resource('categories',	'Admin\CategoriesController')->middleware('product');
     Route::get('admin-login', 'Admin\AuthController@loginForm')->name('admin-login');
     Route::post('admin-login-handle', 'Admin\AuthController@login')->name('login');
+
+
+    // Admin Pre-Orders
+    Route::get('preorders', 'Admin\PreOrderController@index')->name('admin.preorders.index')->middleware('admin');
+    Route::get('preorders/create', 'Admin\PreOrderController@create')->name('admin.preorders.create')->middleware('admin');
+    Route::delete('preorders/{id}', 'Admin\PreOrderController@destroy')->name('admin.preorders.delete')->middleware('admin');
+    Route::get('preorders/{id}', 'Admin\PreOrderController@show')->name('admin.preorders.show')->middleware('admin');
+    Route::get('preorders/edit/{id}', 'Admin\PreOrderController@edit')->name('admin.preorders.edit')->middleware('admin');
+    Route::post('preorders', 'Admin\PreOrderController@store')->name('admin.preorders.store')->middleware('admin');
+    Route::put('preorders/update/{id}', 'Admin\PreOrderController@update')->name('admin.preorders.update')->middleware('admin');
+
+
     Route::post('admin-logut', function(){
         Auth::logout();
         return redirect()->route('admin-login');

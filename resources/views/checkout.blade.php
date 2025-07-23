@@ -206,14 +206,14 @@
                                                         <strong> × {{ $item->product_quantity }}</strong>
                                                     </a>
                                                 </td>
-                                                <td># {{ number_format($lineTotal, 2) }}</td>
+                                                <td>₦{{ number_format($lineTotal) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <td>Sub Total</td>
-                                            <td><strong># {{ number_format($subtotal, 2) }}</strong></td>
+                                            <td><strong>₦ {{ number_format($subtotal) }}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Shipping</td>
@@ -222,7 +222,7 @@
                                                     <li>
                                                         <div class="custom-control custom-radio">
                                                             <input type="radio" id="flatrate" name="shipping" class="custom-control-input" checked />
-                                                            <label class="custom-control-label" for="flatrate">Flat Rate: # {{ number_format($shipping_cost,2) }}</label>
+                                                            <label class="custom-control-label" for="flatrate">Flat Rate: ₦ {{ number_format($shipping_cost) }}</label>
                                                         </div>
                                                     </li>
                                                     <li>
@@ -236,7 +236,7 @@
                                         </tr>
                                         <tr>
                                             <td>Total Amount</td>
-                                            <td><strong># <span id="grand-total">{{ number_format($shipping_cost + $subtotal, 2) }}</span></strong></td>
+                                            <td><strong>₦ <span id="grand-total">{{ number_format($shipping_cost + $subtotal, 2) }}</span></strong></td>
                                         </tr>
                                     </tfoot>
 
@@ -259,7 +259,7 @@
                                     <div class="payment-method-name">
                                         <div class="custom-control custom-radio">
                                             <input type="radio" id="paypalpayment" name="paymentmethod" value="paypal" class="custom-control-input" />
-                                            <label class="custom-control-label" for="paypalpayment">PayStack <img src="assets/img/paypal-card.jpg" class="img-fluid paypal-card" alt="Paypal" /></label>
+                                            <label class="custom-control-label" for="paypalpayment">Pay Online <img src="assets/img/paypal-card.jpg" class="img-fluid paypal-card" alt="Paypal" /></label>
                                         </div>
                                     </div>
                                     <div class="payment-method-details" data-method="paypal">

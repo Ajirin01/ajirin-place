@@ -23,14 +23,14 @@
                                         <span>{{$product->wholesale_stock}} in stock</span>
                                     </div>
                                     <div class="pricebox">
-                                        <span class="regular-price">#{{$product->wholesale_price == null  ? $product->price : $product->wholesale_price }}</span>
+                                        <span class="regular-price">₦{{ number_format($product->wholesale_price == null  ? $product->price : $product->wholesale_price) }}</span>
                                     </div>
                                     {{-- {{$product->description}} --}}
                                     @php
                                         echo $product->description;
                                     @endphp
                                     <div class="quantity-cart-box d-flex align-items-center">
-                                        <form id="{{$product->id}}" action="{{ route('add-to-cart') }}" method="post">
+                                        <form id="{{$product->id}}" action="{{ route('add-to-cart') }}" method="post" class="quantity-cart-box d-flex align-items-center">
                                             @csrf
                                             <div class="quantity">
                                                 <div class="pro-qty">
@@ -157,14 +157,14 @@
                                         <span>{{$product->stock}} in stock</span>
                                     </div>
                                     <div class="pricebox">
-                                        <span class="regular-price">#{{$product->price}}</span>
+                                        <span class="regular-price">₦{{ number_format($product->price)}}</span>
                                     </div>
                                     {{-- {{$product->description}} --}}
                                     @php
                                         echo $product->description;
                                     @endphp
                                     <div class="quantity-cart-box d-flex align-items-center">
-                                        <form id="{{$product->id}}" action="{{ route('add-to-cart') }}" method="post">
+                                        <form id="{{$product->id}}" action="{{ route('add-to-cart') }}" method="post" class="quantity-cart-box d-flex align-items-center">
                                             @csrf
                                             <div class="quantity">
                                                 <div class="pro-qty">
@@ -329,16 +329,7 @@
             </div>
         </div>
     @endif
-    <!-- Quick view modal end -->
 
-    {{-- @php
-        if (Session::get('msg') == "created"){
-        
-        echo "<script> document.getElementById('model').click() </script>";
-        // echo Session::get('msg') == "created";
-        }
-        Session::put('msg', '');
-    @endphp --}}
     @if (Session::get('msg') == "created")
         <a href="#" data-toggle="modal" id="model" data-target="#quick_view"> <span data-toggle="tooltip" data-placement="left" title="Quick view"><i class="fa fa-search"></i></span> </a>
 

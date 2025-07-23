@@ -14,6 +14,7 @@
                                     <a href="#dashboad" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
                                         Dashboard</a>
                                     <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Orders</a>
+                                    <a href="#preorders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Pre-Orders</a>
                                     <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i> address</a>
                                     <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a>
                                     <a href="login-register.html"><i class="fa fa-sign-out"></i> Logout</a>
@@ -59,6 +60,38 @@
                                                                 <td>{{$order->status}}</td>
                                                                 <td>{{$order->order_total}}</td>
                                                                 <td><a href="{{ route('order-details', $order->id) }}" class="check-btn sqr-btn ">View</a></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Tab Content End -->
+
+                                    <!-- Single Tab Content Start -->
+                                    <div class="tab-pane fade" id="preorders" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <h3>Pre Orders</h3>
+                                            <div class="myaccount-table table-responsive text-center">
+                                                <table class="table table-bordered">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Order</th>
+                                                            <th>Date</th>
+                                                            <th>Status</th>
+                                                            <th>Total</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($preorders as $order)
+                                                            <tr>
+                                                                <td>{{$order->id}}</td>
+                                                                <td>{{$order->created_at}}</td>
+                                                                <td>{{$order->status}}</td>
+                                                                <td>{{$order->estimated_cost}}</td>
+                                                                <td><a href="{{ url('pre-order/invoice', $order->invoice_code) }}" class="check-btn sqr-btn ">View</a></td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
