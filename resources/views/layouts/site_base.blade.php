@@ -36,7 +36,7 @@
     <meta name="description" content="meta description">
 
     <!-- Site title -->
-    <title>Phase 2</title>
+    <title>Ajirin Place | Online</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('site/assets/img/favicon.ico')}}" type="image/x-icon" />
     <!-- Bootstrap CSS -->
