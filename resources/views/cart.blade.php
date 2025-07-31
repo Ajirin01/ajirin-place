@@ -53,7 +53,7 @@
 
                                             <td class="pro-remove">
                                                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                                                    <input type="checkbox" name="add_to_checkout" id="add-to-checkout{{$cart->id}}" onclick="return addToCheckout({{$cart->id}})">
+                                                    <input style="transform: scale(2)" type="checkbox" name="add_to_checkout" id="add-to-checkout{{$cart->id}}" onclick="return addToCheckout({{$cart->id}})" checked>
                                                     <a href="{{ route('delete_cart_item', $cart->id) }}" style="margin-left: 10px;">
                                                         <i class="fa fa-trash-o" style="color: red;"></i>
                                                     </a>
@@ -273,5 +273,11 @@
         }
         
     }
+
+    window.addEventListener('DOMContentLoaded', function () {
+        @foreach ($carts as $cart)
+            addToCheckout({{ $cart->id }});
+        @endforeach
+    });
 </script>
 @endsection

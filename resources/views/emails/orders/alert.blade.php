@@ -31,4 +31,4 @@
     @endforeach
 </ul>
 
-<p>Please log in to the <a href="{{ url('/admin/orders') }}">admin dashboard</a> to process this order.</p>
+<p>Please log in to the <a href="{{ url('/admin/order/pending') }}">admin dashboard</a> to process this order.</p>

@@ -29,10 +29,8 @@ class ContactUs extends Mailable
      */
     public function build()
     {
-        return $this->from("hhoollaaggookkee.space@gmail.com")
-                            ->to('mubarakolagoke@gmail.com')
-                            ->subject('Subject: New Enquiry')
-                            ->view('email.contactUs-mail-view')
-                            ->with('email',$this->data);
+        return $this->subject('Subject: New Enquiry')
+                ->view('emails.contactUs-mail-view')
+                ->with('email',$this->data);
     }
 }

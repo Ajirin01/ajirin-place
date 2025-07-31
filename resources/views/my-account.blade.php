@@ -105,6 +105,7 @@
                                     <div class="tab-pane fade" id="address-edit" role="tabpanel">
                                         <div class="myaccount-content">
                                             <h3>Billing Address</h3>
+                                            <a href="{{ url('add-address') }}">Add Shipping Address</a>
                                             @foreach ($shipping_addresses as $address)
                                                 <address>
                                                     <p><strong>{{$address->first_name}} {{$address->first_name}}</strong></p>

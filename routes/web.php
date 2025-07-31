@@ -52,6 +52,8 @@ Route::get('/pay',        'PaymentController@initialize')->name('payment.initial
 Route::get('/payment/callback', 'PaymentController@callback')->name('payment.callback');
 Route::get('/order/confirmation/{orderNumber}', 'SiteController@orderConfirmation')->name('order.confirmation');
 
+Route::get('add-address', 'SiteController@addAddress')->name('add-address')->middleware('auth');
+Route::post('hanle-add-address', 'SiteController@handleAddAddress')->name('handle-add-address')->middleware('auth');
 
 Route::get('edit-address/{id}', 'SiteController@editAddress')->name('edit-address')->middleware('auth');
 Route::put('hanle-edit-address/{id}', 'SiteController@handleEditAddress')->name('handle-edit-address')->middleware('auth');
@@ -70,6 +72,7 @@ Route::prefix('admin')->group(function () {
     Route::get('order/{type}',	'Admin\OrdersController@getOrdersByType')->name('orders_by_type')->middleware('order');
     Route::get('order-details/{order}',	'Admin\OrdersController@orderDetails')->name('order_details')->middleware('order');
     Route::post('update_order_status/{order}', 'Admin\OrdersController@updateOrderStatus')->name('update_order_status')->middleware('order');
+    Route::delete('/orders/{id}', 'Admin\OrdersController@destroy')->name('orders.destroy');
     Route::resource('brands',	'Admin\BrandsController')->middleware('product');
     Route::resource('users',	'Admin\UsersController')->middleware('admin');
     Route::resource('categories',	'Admin\CategoriesController')->middleware('product');

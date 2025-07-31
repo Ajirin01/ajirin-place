@@ -153,6 +153,7 @@ class SiteController extends Controller
 
     public function checkout_handler(Request $request)
     {
+        // return response()->json($request->all());
         // 1. create / pick the shipping address (your existing logic) ……………………………
         $shipping_id = ShippingAddress::all()->count() + 1;
         if (!empty($request->first_name) && !empty($request->last_name)) {
@@ -174,11 +175,13 @@ class SiteController extends Controller
                 'order_number'     => rand(123456789, 999999999),
                 'user_email'       => $request->email,
                 'cart'             => $request->cart,
-                'order_total'      => $totalClean,          //  ✅
+                'order_total'      => $totalClean,
                 'payment_method'   => $request->payment_method,
-                'status'           => 'pay on delivery',
+                'status'           => 'pending',
                 'sale_mode'        => Session::get('shopping_type'),
+                'pickup' => $request->has('pickup') ? true : false
             ];
+
             // return response()->json($data['cart']);
             Order::create($data);
 
@@ -186,10 +189,13 @@ class SiteController extends Controller
             Cart::where('user_id', auth()->id())->delete();
 
             // ✅ Send confirmation to user
+            
+            // Mail::to($request->email)->send(new OrderConfirmation($data));
             Mail::to($request->email)->send(new OrderConfirmation($data));
 
+
             // ✅ Alert store admin (change to your store email)
-            Mail::to('mubarakolagoke@gmail.com')->send(new NewOrderAlert($data));
+            Mail::to('order@ajirinplace.com.ng')->send(new NewOrderAlert($data));
 
             // Redirect to confirmation with order number
             return redirect()->route('order.confirmation', $data['order_number']);
@@ -207,17 +213,20 @@ class SiteController extends Controller
                 'total'       => floatval(str_replace(',', '', $request->total_with_shipping)),
                 'sale_mode'   => Session::get('shopping_type'),
                 'user_id'     => auth()->id(),
+                'pickup'      => $request->has('pickup') ? true : false,
+                'user_email' => $request->email
             ];
 
             // Save cart in session so the user can’t tamper with JS
             session([
-                'cart_items' => $request->cart,     // still JSON string
-                'payment_meta' => $meta,
+                'cart_items'    => $request->cart,     // still JSON string
+                'payment_meta'  => $meta,
             ]);
 
             // simple redirect (POST → Controller) so we don’t expose secrets in URL
             return redirect()->route('payment.initialize');
         }
+
 
         return back(); // fall‑through safety
     }
@@ -316,24 +325,91 @@ class SiteController extends Controller
         return view('contact');
     }
 
-    public function sendMessage(Request $request){
-        $message_body = "Phone Number: ".$request->phone. "<br>". "Message Body: ".$request->phone;
-        $data = array(
-            'name' => $request->name,
-            'email' => $request->email,
-            'message' => $message_body
-        );
-        if(Mail::send(new ContactUs($request->all()))){
-            return redirect()->back()->with('msg','profile was successfully update!');
-        }else{
-            return redirect()->back()->with('error','ERROR! could not update profile!');
+    public function sendMessage(Request $request)
+    {
+        try {
+            $message_body = "Phone Number: " . $request->phone . "<br>" . "Message Body: " . $request->message;
+
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'message' => $message_body
+            ];
+
+            // ✅ Send to a specific address
+            Mail::to('request@ajirinplace.com.ng')->send(new ContactUs($data));
+
+
+            return redirect()->back()->with('msg', 'Message was successfully sent!');
+        } catch (\Exception $e) {
+            \Log::error('ContactUs send error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'ERROR! could not send message!');
         }
     }
 
-    public function orderDetails($id){
-        $order = Order::find($id);
-        $cart = json_decode($order->cart);
-        return view('order-details',['order'=> $order, 'cart'=> $cart]);
+    public function orderDetails($id)
+    {
+        $order = Order::findOrFail($id);
+
+        // Decode cart and shipping details
+        $cart = json_decode($order->cart, true);
+        $shipping = json_decode($order->shipping_details, true);
+
+        return view('order-details', [
+            'order' => $order,
+            'cart' => $cart,
+            'shipping' => $shipping,
+            'pickup' => $order->pickup
+        ]);
+    }
+
+
+    public function addAddress(){
+        $address = null; // or: new Address();
+        return view('add-address', compact('address'));
+    }
+
+    public function handleAddAddress(Request $request)
+    {
+        $rules = [
+            'first_name'      => 'required|string|max:255',
+            'last_name'       => 'required|string|max:255',
+            'email'           => 'required|email',
+            'state'           => 'required|string',
+            'city'            => 'required|string',
+            'street_address'  => 'required|string',
+            'postcode'        => 'nullable|string',
+            'phone'           => 'required|string',
+        ];
+
+        $validate = Validator::make($request->all(), $rules);
+
+        if ($validate->fails()) {
+            return redirect()->back()
+                            ->withInput()
+                            ->withErrors($validate);
+        }
+
+        try {
+            if ($request->has('is_default')) {
+                ShippingAddress::where('email', $request->email)
+                    ->update(['is_default' => false]);
+
+                $request->merge(['is_default' => true]);
+            } else {
+                $request->merge(['is_default' => false]);
+            }
+
+            // return response()->json($request->all());
+
+            ShippingAddress::create($request->all());
+
+            return redirect()->back()->with('message', 'Address Created!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                            ->withInput()
+                            ->withErrors(['message' => 'Error creating address: ' . $e->getMessage()]);
+        }
     }
 
     public function editAddress($id){
@@ -342,12 +418,51 @@ class SiteController extends Controller
     }
 
 
-    public function handleEditAddress($id, Request $request){
-        $address = ShippingAddress::find($id);
-        $address->update($request->all());
-        
-        return redirect()->back()->with('msg', 'Address Changed!');
+    public function handleEditAddress($id, Request $request)
+    {
+        $rules = [
+            'first_name'      => 'required|string|max:255',
+            'last_name'       => 'required|string|max:255',
+            'email'           => 'required|email',
+            'state'           => 'required|string',
+            'city'            => 'required|string',
+            'street_address'  => 'required|string',
+            'postcode'        => 'nullable|string',
+            'phone'           => 'required|string',
+        ];
+
+        $validate = Validator::make($request->all(), $rules);
+
+        if ($validate->fails()) {
+            return redirect()->back()
+                            ->withInput()
+                            ->withErrors($validate);
+        }
+
+        try {
+            $address = ShippingAddress::findOrFail($id);
+
+            if ($request->has('is_default')) {
+                // Unset previous defaults for this email
+                ShippingAddress::where('email', $request->email)
+                    ->where('id', '!=', $id)
+                    ->update(['is_default' => false]);
+
+                $request->merge(['is_default' => true]);
+            } else {
+                $request->merge(['is_default' => false]);
+            }
+
+            $address->update($request->all());
+
+            return redirect()->back()->with('msg', 'Address Changed!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                            ->withInput()
+                            ->withErrors(['message' => 'Error updating address: ' . $e->getMessage()]);
+        }
     }
+
 
     public function updateMyAccount(Request $request){
         $current_password = $request->current_password;

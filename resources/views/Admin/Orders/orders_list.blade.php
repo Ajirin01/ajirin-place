@@ -35,6 +35,7 @@
                     {{-- <th>Wholeorder Stock</th> --}}
                     <th>Total Amount</th>
                     <th>Payment Method</th>
+                    <th>Date</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -45,6 +46,7 @@
                         <td>{{$order->order_number}}</td>
                         <td>{{$order->order_total}}</td>
                         <td>{{$order->payment_method}}</td>
+                        <td>{{$order->created_at}}</td>
                         <td>{{$order->status}}</td>
                         <td>
                           <form id="update-empty" action="{{ route('update_order_status', $order->id) }}" method="post">
@@ -67,9 +69,16 @@
                                 <i class="fas fa-eye text-primary"></i> View
                             </a>
                             
-                            {{-- <a class="btn">
-                                <i class="fas fa-pause"></i> Pause
-                            </a> --}}
+                            @can('isAdmin')
+                              <form action="{{ route('orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this order?');" style="display:inline;">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit" class="btn">
+                                      <i class="fas fa-trash text-danger"></i> Delete
+                                  </button>
+                              </form>
+                            @endcan
+
                         </td>
                         
                       </tr>
@@ -81,6 +90,7 @@
                     {{-- <th>Wholeorder Stock</th> --}}
                     <th>Total Amount</th>
                     <th>Payment Method</th>
+                    <th>Date</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>

@@ -80,6 +80,14 @@
                                     </div>
                                 </div>
 
+                                <div class="single-input-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="is_default" name="is_default"
+                                            {{ old('is_default', $address->is_default ?? '') ? 'checked' : '' }}>
+                                        <label class="custom-control-label" for="is_default">Set as default shipping address</label>
+                                    </div>
+                                </div>
+
                                 <div class="summary-footer-area">
                                     <button type="submit" class="check-btn sqr-btn form-control">Update Address</button>
                                 </div>

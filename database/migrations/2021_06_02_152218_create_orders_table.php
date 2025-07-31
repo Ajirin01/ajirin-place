@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->longText('shipping_details');
             $table->longText('cart');
             $table->string('status')->default('pending');
+            $table->boolean('pickup')->default(false);
             $table->timestamps();
         });
     }

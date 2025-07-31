@@ -94,15 +94,18 @@ class PaymentController extends Controller
         /* 5. Rebuild & save the final order */
 
         $data = [
-            'shipping_details' => ShippingAddress::find($meta['shipping_id']),
+            'shipping_details' => ShippingAddress::find($meta['shipping_id'] ?? 0),
+
             'order_number'     => rand(123456789, 999999999),
-            'user_email'       => $verify['data']['customer']['email'],
+            'user_email'       => $meta['user_email'],
             'cart'             => session('cart_items'),
             'order_total'      => $meta['total'] ?? 0,
             'payment_method'   => 'flutterwave',
-            'status'           => 'paid',
-            'sale_mode'        => $meta['sale_mode'] ?? 'retail', // 👈 safe fallback
+            'status'           => 'pending',
+            'sale_mode'        => $meta['sale_mode'] ?? 'retail',
+            'pickup' => isset($meta['pickup']) && $meta['pickup'] ? true : false
         ];
+
 
         $order = Order::create($data);
 
@@ -117,7 +120,7 @@ class PaymentController extends Controller
         Mail::to($data['shipping_details']->email)->send(new OrderConfirmation($data));
 
         // ✅ Alert store admin (change to your store email)
-        Mail::to('mubarakolagoke@gmail.com')->send(new NewOrderAlert($data));
+        Mail::to('order@ajirinplace.com.ng')->send(new NewOrderAlert($data));
 
         /* 7. Redirect to confirmation */
         return redirect()->route('order.confirmation', $order->order_number);

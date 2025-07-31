@@ -322,19 +322,11 @@
                                 
                             </div>
                             <div class="newsletter__box">
-                                @if (Session::get("sale_type") == "wholesale")
-                                    <form action="{{ route('shopping-setting') }}" method="POST">
-                                        @csrf
-                                        <input name="shopping_type" value="retail" style="opacity: 0" type="text" id="mc-email" autocomplete="off" placeholder="wholesale">
-                                        <button class="btn" id="mc-submit">shop now!</button>
-                                    </form>
-                                @else
                                     <form action="{{ route('shopping-setting') }}" method="POST">
                                         @csrf
                                         <input name="shopping_type" value="wholesale" style="opacity: 0" type="text" id="mc-email" autocomplete="off" placeholder="wholesale">
                                         <button class="btn" id="mc-submit">Accept email notifications!</button>
                                     </form>
-                                @endif
                             </div>
                             <!-- mailchimp-alerts Start -->
                             <div class="mailchimp-alerts">
@@ -345,10 +337,10 @@
                             <!-- mailchimp-alerts end -->
                         </div>
                         <div class="social-icons">
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube"></i></a>
+                            <a href="https://facebook.com/holagoke.mubarrakh" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
+                            {{-- <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a> --}}
+                            <a href="https://instagram.com/ajirin_place" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram"></i></a>
+                            {{-- <a href="https://youtube.com/olagoke_mubarak" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube"></i></a> --}}
                         </div>
                     </div>
                 </div>

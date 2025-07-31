@@ -6,8 +6,20 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="contact-message">
+                        @if (session('msg'))
+                            <div class="alert alert-success text-center mt-3">
+                                {{ session('msg') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger text-center mt-3">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
                         <h2>Make Enquiries</h2>
-                        <form id="contact-form" action="{{ route('sendMessage') }}" method="post" class="contact-form">
+                        <form id="" action="{{ route('sendMessage') }}" method="post" class="contact-form">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6">

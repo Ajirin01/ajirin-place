@@ -15,5 +15,6 @@ class Order extends Model
         'payment_method',
         'order_total',
         'status',
+        'pickup'
     ];
 }

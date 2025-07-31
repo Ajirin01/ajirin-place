@@ -15,6 +15,7 @@ class ShippingAddress extends Model
         'city', 
         'state', 
         'postcode',
-        'phone'
+        'phone',
+        'is_default'
     ];
 }
