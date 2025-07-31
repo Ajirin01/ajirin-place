@@ -80,8 +80,7 @@
     <!-- map area start -->
     <div class="map-area-wrapper">
         <div class="container">
-                <div id="map_content" data-lat="23.763491" data-lng="90.431167" data-zoom="8" data-maptitle="HasTech" data-mapaddress="Floor# 4, House# 5, Block# C     </br> Banasree Main Rd, Dhaka">
-                </div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63291.93260812889!2d4.468602404327701!3d7.493294984750534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103837a2b2987ae3%3A0x680c573b22ed9b61!2sRock%20n%20Bims%20lounge!5e0!3m2!1sen!2sng!4v1753925562994!5m2!1sen!2sng" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </div>
     <!-- map area end -->
