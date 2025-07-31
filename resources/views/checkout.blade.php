@@ -331,7 +331,7 @@
 
         const zones = {
             zoneA: {
-                fee: 1500,
+                fee: 4000,
                 areas: ['Lagos', 'Ikeja', 'Yaba', 'Lekki', 'Ojota']
             },
             zoneB: {
@@ -339,8 +339,12 @@
                 areas: ['Ibadan', 'Abeokuta', 'Ilorin', 'Akure']
             },
             zoneC: {
-                fee: 3500,
+                fee: 6000,
                 areas: ['Abuja', 'Enugu', 'Port Harcourt', 'Kano']
+            },
+            zoneD: {
+                fee: 1000,
+                areas: ['Ile-Ife', 'Oshogbo', 'Ilesha', 'Ede']
             },
             zoneDefault: {
                 fee: 5000
